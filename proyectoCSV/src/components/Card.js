@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Image, Pressable, StyleSheet} from 'react-native';
 import LabelLevel from './LabelLevel';
+import {colors, radius, spacing} from '../theme/index';
 
 export default function Card ({urlImg, onPress, width}){
     return(

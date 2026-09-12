@@ -7,13 +7,15 @@ import{ Ionicons } from '@expo/vector-icons';
 import LabelLevel from '../components/LabelLevel';
 import Card from '../components/Card';
 import NivelChip from '../components/NivelChip';
+import EstadoVacio from '../components/EstadoVacio';
 import useResponsive from '../hooks/useResponsive';
 import {colors, radius, spacing, typography} from '../theme';
-import { formatearPrecio, CLASES, NIVELES } from '../data/Classes';
+import { formatearPrecio, CLASES, NIVELES } from '../data/Clases';
 
 export default function ClasesScreen ({ navigation }) {
     const insets = useSafeAreaInsets();
     const {columnas, paddingHorizontal}= useResponsive();
+
     const [nivel, setNivel] = useState('')
     const [busqueda, setBusqueda] = useState('')
 
@@ -81,12 +83,24 @@ export default function ClasesScreen ({ navigation }) {
                     paddingHorizontal,
                     flexgrow: 1
                 }}
+                numColumns={ columnas }
+                ListEmptyComponent={
+                    <EstadoVacio
+                        icono="search-outline"
+                        titulo="No encontramos resultados"
+                        mensaje="la combinacion de busqueda no tiene resultados"
+                        onAction={()=>{
+                            setNivel('Todos');
+                            setBusqueda('');
+                        }}
+                    />
+                }
+
             />
         </View>
 
     )
 }
-
 
 const style = StyleSheet.create({
   pantalla: { flex: 1, backgroundColor: colors.fondo },

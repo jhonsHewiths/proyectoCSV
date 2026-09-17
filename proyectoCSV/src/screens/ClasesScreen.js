@@ -19,12 +19,18 @@ export default function ClasesScreen ({ navigation }) {
     const [nivel, setNivel] = useState('Todos')
     const [busqueda, setBusqueda] = useState('')
 
+    const sinTildes = (texto) => {
+        return texto
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+    }
+
     const resultados = useMemo(()=>{
-        const textoBusqueda = busqueda.trim().toLowerCase();
+        const textoBusqueda = sinTildes(busqueda.trim().toLowerCase());
         return CLASES.filter((clase)=>{
             const coincidenciaNivel = nivel === 'Todos' || clase.nivel === nivel
-            const coincidenciaTexto = textoBusqueda === '' || clase.titulo.toLowerCase().includes(textoBusqueda) ||
-                                        clase.profesor.nombre.toLowerCase().includes(textoBusqueda);
+            const coincidenciaTexto = textoBusqueda === '' || sinTildes(clase.titulo.toLowerCase()).includes(textoBusqueda) ||
+                                        sinTildes(clase.profesor.nombre.toLowerCase()).includes(textoBusqueda);
             return coincidenciaNivel && coincidenciaTexto
         });
     },[ nivel, busqueda]);
@@ -76,12 +82,13 @@ export default function ClasesScreen ({ navigation }) {
                 key={columnas}
                 contentContainerStyle={{ paddingHorizontal }}
                 renderItem={({ item }) => (
-                    <View style={style.tarjeta}>
+                    <TouchableOpacity style={style.tarjeta} 
+                        onPress={() => navigation.navigate('DetalleClase', { clase: item })}>
                         <Image source={{ uri: item.imagen }} style={{ width: '100%', height: 120, borderRadius: 8 }} />
                         <Text style={typography.titulo}>{item.titulo}</Text>
                         <Text style={{ color: colors.textoSuave }}>Nivel: {item.nivel}</Text>
                         <Text style={{ fontWeight: 'bold' }}>${item.precio}</Text>
-                    </View>
+                    </TouchableOpacity>
                 )}
                 ListEmptyComponent={
                     <Text style={{ textAlign: 'center', marginTop: 20 }}>No se encontraron clases</Text>

@@ -16,7 +16,7 @@ export default function ClassesStack() {
             <Stack.Screen
                 name="DetalleClase"
                 component={DetalleClasesScreen}
-                options={{title: 'Detalle', headerBackTitle: 'Atras'}}
+                options={{title: "Detalle" || 'Detalle de clase', headerBackTitle: 'Atras'}}
             />
         </Stack.Navigator>
     )

@@ -115,6 +115,7 @@ export default function DetalleClase({route}){
                     onPress={() => {
                         if (cupos > 0) {
                             setCupos(restCupos => restCupos - 1);
+                            Alert.alert("Se realizó la reserva correctamente.");
                         } else {
                           Alert.alert("Lo sentimos, ya no restan cupos para esta clase.");
                         }

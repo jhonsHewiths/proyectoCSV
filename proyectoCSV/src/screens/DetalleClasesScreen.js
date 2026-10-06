@@ -1,18 +1,20 @@
-import React, {useState, useMemo} from "react";
+import React, {useState} from "react";
 import {View, Text, StyleSheet, ScrollView, Alert, Image, Pressable} from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import useResponsive from "../hooks/useResponsive";
 import { colors, spacing, radius, typography } from "../theme/index";
-import { formatearPrecio } from "../data/Clases";
-import LabelLevel from "../components/LabelLevel";
+/* import { formatearPrecio } from "../data/Clases";
+import LabelLevel from "../components/LabelLevel"; */
+import { useReservas } from "../components/ReservasHechas";
 
 export default function DetalleClase({route}){
     const insets = useSafeAreaInsets();
     const { clase } = route.params;
     const {paddingHorizontal, esTablet} = useResponsive();
-    const [cupos, setCupos] = useState(Number(clase.cupos));
+    const {agregarReserva, cuposDisponibles } = useReservas();
+    const cupos = cuposDisponibles(clase);
     const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
 
     return (
@@ -117,6 +119,7 @@ export default function DetalleClase({route}){
                 ))}
               </View>
             </View>
+            
             <View style={{...styles.barra, paddingHorizontal: spacing.lg}}>
               <View style={styles.datos}>
                   <View style={{flex: 1}}>
@@ -132,11 +135,16 @@ export default function DetalleClase({route}){
                  <Pressable
                     style={styles.boton}
                     onPress={() => {
-                        if (cupos > 0) {
-                            setCupos(restCupos => restCupos - 1);
-                            Alert.alert("Se realizó la reserva correctamente.");
+                        if (!horarioSeleccionado) {
+                            Alert.alert("Para reservar debes seleccionar un horario.");
                         } else {
-                          Alert.alert("Lo sentimos, ya no restan cupos para esta clase.");
+                            const resultado = agregarReserva(clase, horarioSeleccionado);
+                            if (!resultado.success) {
+                                Alert.alert("Ya tienes una reserva para este horario.");
+                            } else {
+                                Alert.alert("Reserva realizada con éxito.");
+                                setHorarioSeleccionado(null);
+                            }
                         }
                     }}
                   >

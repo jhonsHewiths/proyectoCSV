@@ -31,17 +31,17 @@ export default function ClassesStack() {
                 options={{title: "Mis clases", headerBackTitle: 'Atras'}}
             />
 
-           {/*  <Stack.Screen
+            <Stack.Screen
                 name="PerfilScreen"
                 component={PerfilScreen}
                 options={{title: "Mi Perfil", headerBackTitle: 'Atras'}}
-            />*/
+            />
 
             <Stack.Screen
                 name="ReservasScreen"
                 component={ReservasScreen}
                 options={{title: "Mis Reservas", headerBackTitle: 'Atras'}}
-            />}
+            />
 
         </Stack.Navigator>
     )

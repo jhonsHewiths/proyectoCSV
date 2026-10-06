@@ -36,7 +36,7 @@ export default function ClasesScreen ({ navigation }) {
     },[ nivel, busqueda]);
 
     return(
-        <View style={[style.pantalla, {paddingTop: insets.top + spacing.md}]}>
+        <View style={[style.pantalla, {paddingTop: spacing.md}]}>
             <View>
                 <Text style={typography.titulo}>Clases de ingles</Text>
                 <View style={style.busqueda}>

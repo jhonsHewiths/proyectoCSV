@@ -13,6 +13,7 @@ export default function DetalleClase({route}){
     const { clase } = route.params;
     const {paddingHorizontal, esTablet} = useResponsive();
     const [cupos, setCupos] = useState(Number(clase.cupos));
+    const [horarioSeleccionado, setHorarioSeleccionado] = useState(null);
 
     return (
         <View style={styles.pantalla}>
@@ -89,15 +90,33 @@ export default function DetalleClase({route}){
               </Text>
             </View>
 
-            <View style={{...styles.dato, paddingBottom: spacing.lg}}>
-                <Text style={typography.titulo}>
-                    Elige tu horario
-                </Text>
-                <Text style={styles.descripcion}>
-                  {clase.horarios}
-                </Text> 
-            </View>
+            <View style={{ ...styles.dato, paddingBottom: spacing.lg }}>
+              <Text style={typography.titulo}>
+                Elige tu horario
+              </Text>
 
+              <View style={styles.horarios}>
+                {clase.horarios.map((horario) => (
+                  <Pressable
+                    key={horario}
+                    onPress={() => setHorarioSeleccionado(horario)}
+                    style={[
+                      styles.horario,
+                      horarioSeleccionado === horario && styles.horarioSeleccionado
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.textoHorario,
+                        horarioSeleccionado === horario && styles.textoHorarioSeleccionado
+                      ]}
+                    >
+                      {horario}
+                    </Text>
+                  </Pressable>
+                ))}
+              </View>
+            </View>
             <View style={{...styles.barra, paddingHorizontal: spacing.lg}}>
               <View style={styles.datos}>
                   <View style={{flex: 1}}>
@@ -182,5 +201,28 @@ boton: {
 textoBoton: {
   color: '#fff',
   fontWeight: '700',
+},
+horarios: {
+  marginTop: 10,
+  flexDirection: "row",
+  gap: 8,
+},
+horario: {
+  padding: 6,
+  borderWidth: 1,
+  borderColor: '#ccc',
+  borderRadius: 10,
+},
+horarioSeleccionado: {
+  borderColor: '#007AFF',
+  backgroundColor: '#EAF3FF',
+},
+textoHorario: {
+  fontSize: 16,
+  color: '#333',
+},
+textoHorarioSeleccionado: {
+  color: '#007AFF',
+  fontWeight: 'bold',
 },
 });

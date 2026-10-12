@@ -1,10 +1,11 @@
-import react from "react";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import InicioScreen from "../screens/InicioScreen";
 import DetalleClasesScreen from "../screens/DetalleClasesScreen";
 import ClasesScreen from "../screens/ClasesScreen";
 import PerfilScreen from "../screens/PerfilScreen";
 import ReservasScreen from "../screens/ReservasScreen";
+import DatosPerfilScreen from "../screens/DatosPerfilScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,7 @@ export default function ClassesStack() {
         <Stack.Navigator>
 
             <Stack.Screen
-                name="Home"
+                name="InicioScreen"
                 component={InicioScreen}
                 options={{title: "Inicio", headerShow: false}}
             />
@@ -34,7 +35,13 @@ export default function ClassesStack() {
             <Stack.Screen
                 name="PerfilScreen"
                 component={PerfilScreen}
-                options={{title: "Mi Perfil", headerBackTitle: 'Atras'}}
+                options={{ title: "Registro", headerBackTitle: 'Atras' }}
+            />
+
+            <Stack.Screen
+                name="DatosPerfil"
+                component={DatosPerfilScreen}
+                options={{ title: "Mis Datos", headerBackTitle: 'Atras' }}
             />
 
             <Stack.Screen

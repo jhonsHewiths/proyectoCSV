@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Pressable, Alert, StyleSheet, ScrollView } from 'react-native';
+import { useUsuario } from '../components/RegistroHecho';
 
-export default function FormularioScreen() {
+export default function FormularioScreen({ navigation }) {
+  const { registrar } = useUsuario();
   const [form, setForm] = useState({ 
     nombre: '', 
     apellido: '',
@@ -24,7 +26,20 @@ export default function FormularioScreen() {
 
   const handleEnviar = () => {  
     if (!validar()) return;
-    Alert.alert('Registro exitoso', `Bienvenido, ${form.nombre} ${form.apellido}`);
+
+    Alert.alert(
+      'Registro exitoso', 
+      `Bienvenido, ${form.nombre} ${form.apellido}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            registrar(form);
+            navigation.navigate('DatosPerfil');
+          }
+        }
+      ]
+    );
   };
 
   return (
